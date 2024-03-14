@@ -1,7 +1,5 @@
 import torch
-import torch.nn as nn
-from multi_head_attention import MultiheadAttention
-
+from torch import nn
 
 class EncoderBlock(nn.Module):
 
@@ -51,7 +49,7 @@ class EncoderBlock(nn.Module):
 
         self.dropout = nn.Dropout(self.dropout_rate)
         self.norm1 = nn.LayerNorm(self.d_model)
-        self.self_attn = MultiheadAttention(
+        self.self_attn = nn.MultiheadAttention(
             self.d_model, self.n_heads, dropout=self.dropout_rate, bias=self.bias,
             add_bias_kv=False, kdim=self.d_model, vdim=self.d_model, batch_first=True)
         self.norm2 = nn.LayerNorm(self.d_model)
@@ -135,11 +133,11 @@ class DecoderBlock(nn.Module):
 
         self.dropout = nn.Dropout(self.dropout_rate)
         self.norm1 = nn.LayerNorm(self.d_model)
-        self.self_attn = MultiheadAttention(
+        self.self_attn = nn.MultiheadAttention(
             self.d_model, self.n_heads, dropout=self.dropout_rate, bias=self.bias,
             add_bias_kv=False, kdim=self.d_model, vdim=self.d_model, batch_first=True)
         self.norm2 = nn.LayerNorm(self.d_model)
-        self.cross_attn = MultiheadAttention(
+        self.cross_attn = nn.MultiheadAttention(
             self.d_model, self.n_heads, dropout=self.dropout_rate, bias=self.bias,
             add_bias_kv=False, kdim=self.d_model, vdim=self.d_model, batch_first=True)
         self.norm3 = nn.LayerNorm(self.d_model)
